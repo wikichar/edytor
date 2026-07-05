@@ -211,7 +211,7 @@ a:hover {
 }
 
 .hidden {
-    display: none;
+    visibility: hidden;
 }
 .side-btn {
     padding: 10px 12px;
@@ -219,10 +219,6 @@ a:hover {
     border: 1px solid #a2a9b1;
     cursor: pointer;
     font-size: 14px;
-}
-
-.side-btn:hover {
-    background: #dfe3e8;
 }
 .section {
     position: relative;
@@ -561,4 +557,7 @@ ul#tocList {
     font-weight: 600;
     color: #101418;
     background-color: white;
+}
+.delete-btn, .add-img-btn, .remove-office, .toggle-predecessor, .side-btn {
+    visibility: hidden;
 }
