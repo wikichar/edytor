@@ -211,7 +211,7 @@ a:hover {
 }
 
 .hidden {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 .side-btn {
     padding: 10px 12px;

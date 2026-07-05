@@ -21,6 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loadBtn) loadBtn.onclick = openExplorer;
 
 });
+document.addEventListener("keydown", e => {
+    if (e.key !== "Backspace") return;
+
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+
+    const range = sel.getRangeAt(0);
+
+    if (range.startOffset !== 0) return;
+
+    const block = range.startContainer.parentElement.closest("p, h1, h2, h3");
+
+    if (!block) return;
+
+    e.preventDefault();
+});
 let currentProject = null;
 
 function getProjectFromURL() {
@@ -237,9 +253,6 @@ function exportHTML() {
 
     const clone = document.documentElement.cloneNode(true);
 
-    // usuń UI
-    hideEditorUI();
-
     // wyłącz edycję
     clone.querySelectorAll("[contenteditable]").forEach(el => {
         el.removeAttribute("contenteditable");
@@ -247,6 +260,10 @@ function exportHTML() {
     clone.querySelectorAll(
         ".side-btn"
     ).forEach(el => el.remove());
+
+    document.querySelectorAll("[contenteditable]").forEach(el => {
+        el.removeAttribute("contenteditable");
+    });
     // 🔥 WYCIĄGNIJ CSS Z LINKA
     const styleSheets = Array.from(document.styleSheets);
     let cssText = "";
@@ -261,24 +278,26 @@ function exportHTML() {
             console.warn("Nie można odczytać CSS (cross-origin?)");
         }
     }
-
     // 🔥 wstrzyknięcie CSS do <style>
     const styleTag = document.createElement("style");
     styleTag.innerHTML = cssText;
-
     clone.querySelector("head").appendChild(styleTag);
 
     // 🔥 usuń link do css (żeby nie było 2 źródeł)
     clone.querySelectorAll('link[rel="stylesheet"]').forEach(l => l.remove());
-    hideEditorUI();
+    document.querySelectorAll(
+        ".delete-btn, .add-img-btn, .remove-office, .toggle-predecessor"
+    ).forEach(el => {
+        el.classList.add("hidden");
+        el.disabled = true; // dla buttonów
+    });
+    console.log("hide")
     // export
     const blob = new Blob([clone.outerHTML], { type: "text/html" });
-    hideEditorUI();
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "strona.html";
     a.click();
-    showEditorUI();
 }
 function exportPNG() {
 
@@ -424,7 +443,8 @@ function closeExplorer() {
 }
 
 function saveProject() {
-    const name = prompt("Nazwa projektu:");
+    const h1 = document.querySelector(".page h1")?.textContent.trim() || "";
+    const name = prompt("Nazwa projektu:", h1);
     if (!name) return;
 
     localStorage.setItem(
@@ -823,6 +843,13 @@ function hideEditorUI() {
 }
 
 function showEditorUI() {
+    console.log("abc")
+    document.querySelectorAll(
+        ".delete-btn, .add-img-btn, .remove-office, .toggle-predecessor"
+    ).forEach(el => {
+        el.classList.remove("hidden");
+        el.disabled = true; // dla buttonów
+    });
     document.querySelectorAll(
         ".delete-btn, .add-img-btn, .remove-office, .toggle-predecessor, .side-btn"
     ).forEach(el => {
