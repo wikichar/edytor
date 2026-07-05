@@ -278,6 +278,20 @@ function exportHTML() {
             console.warn("Nie można odczytać CSS (cross-origin?)");
         }
     }
+    const script = document.createElement("script");
+
+    script.textContent = `
+    window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(
+            ".delete-btn, .add-img-btn, .remove-office, .toggle-predecessor"
+        ).forEach(el => {
+            el.classList.add("hidden");
+            el.disabled = true;
+        });
+    });
+    `;
+
+    clone.querySelector("body").appendChild(script);
     // 🔥 wstrzyknięcie CSS do <style>
     const styleTag = document.createElement("style");
     styleTag.innerHTML = cssText;
@@ -858,4 +872,16 @@ function showEditorUI() {
     });
 
     enablePageEditing(); // albo restoreEditing()
+}
+function insertSeeAlso() {
+    const html = `
+        <div class="see-also">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Information_icon4.svg/20px-Information_icon4.svg.png"
+                 class="see-also-icon">
+            <i>Osobny artykuł: </i>
+            <span contenteditable="true"></span>
+        </div>
+    `;
+
+    document.execCommand("insertHTML", false, html);
 }

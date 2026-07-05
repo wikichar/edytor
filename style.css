@@ -8,11 +8,11 @@ body {
 
 /* Layout */
 .page {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 20px auto;
-    padding: 0 20px;
+    padding-right: 0px;
     display: flex;
-    gap: 20px;
+    gap: 0px;
     align-items: flex-start;
 }
 
@@ -21,15 +21,15 @@ body {
     flex: 1;
     width: 500px;
     background: #fff;
-    padding: 20px 28px;
-    border: 1px solid #a2a9b1;
+    padding: 40px 28px;
     min-width: 0;
 }
 
 /* Title */
 .article h1 {
-    font-size: 32px;
-    font-weight: normal;
+    font-size: 28.8px;
+    font-family: "Linux Libertine", Georgia, Times;
+    font-weight: 500;
     border-bottom: 1px solid #a2a9b1;
     padding-bottom: 6px;
     margin-top: 0;
@@ -69,6 +69,8 @@ a:hover {
     width: 260px;
     background: #fff;
     border: 1px solid #a2a9b1;
+    margin-right: 30px;
+    margin-top: 115px;
     font-size: 14px;
     flex-shrink: 0;
 }
@@ -166,14 +168,11 @@ a:hover {
     border-top: 1px solid #a2a9b1;
 }
 .thumbinfo {
-    width: 230px;
+    width: 180px;
 
     background: #fff;
-
-    padding: 0px; /* TO robi „białe pole” */
-    margin-left: 8px;
-    margin-right: 20px;
-    margin-top: 10px;
+    padding-left: 20px;
+    margin-top: 5px;
     margin-bottom: 1px;
 }
 
@@ -560,4 +559,19 @@ ul#tocList {
 }
 .delete-btn, .add-img-btn, .remove-office, .toggle-predecessor, .side-btn {
     visibility: hidden;
+}
+.see-also {
+    margin: 8px 0;
+    padding-left: 2em;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-style: italic;
+}
+
+.see-also-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
