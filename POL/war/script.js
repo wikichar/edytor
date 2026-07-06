@@ -301,19 +301,6 @@ function exportPNG() {
         ui.forEach(el => el.classList.remove("export-mode"));
     });
 }
-document.getElementById("removeDeath").addEventListener("click", () => {
-
-    document.querySelectorAll(".death-content").forEach(el => {
-
-        if (el.classList.contains("hidden-death")) {
-            el.classList.remove("hidden-death");
-        } else {
-            el.classList.add("hidden-death");
-        }
-
-    });
-
-});
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-btn")) {
         e.target.closest(".section").remove();
