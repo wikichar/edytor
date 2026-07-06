@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Wiki Editor</title>
+
+<style>
+body{
+    margin:0;
+    background:#f6f6f6;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#202122;
+}
+
+.container{
+    width:900px;
+    margin:50px auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:5px;
+    font-size:42px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#54595d;
+    margin-bottom:40px;
+}
+
+h2{
+    border-bottom:1px solid #a2a9b1;
+    padding-bottom:5px;
+    margin-top:35px;
+}
+
+.templates{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.template{
+    background:white;
+    border:1px solid #a2a9b1;
+    border-radius:6px;
+    padding:18px;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.template:hover:not(.disabled){
+    border-color:#36c;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+.template.selected{
+    border:2px solid #36c;
+}
+
+.template h3{
+    margin:0;
+}
+
+.template p{
+    color:#54595d;
+    margin-bottom:0;
+}
+
+.disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.wip{
+    float:right;
+    color:#b32424;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.languages{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    margin-top:20px;
+}
+
+.flag{
+    font-size:42px;
+    cursor:pointer;
+    transition:.15s;
+    border:2px solid transparent;
+    border-radius:8px;
+    padding:6px;
+}
+
+.flag:hover{
+    transform:scale(1.08);
+}
+
+.flag.selected{
+    border-color:#36c;
+    background:white;
+}
+
+button{
+    display:block;
+    margin:45px auto;
+    font-size:20px;
+    padding:14px 40px;
+    background:#36c;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#447ff5;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1 data-key="title">Wiki Editor</h1>
+
+<div class="subtitle" data-key="subtitle">
+Twórz artykuły w stylu Wikipedii
+</div>
+
+<h2 data-key="templateTitle">Szablon</h2>
+
+<div class="templates">
+
+<div class="template selected"
+     data-template="character">
+<h3 data-key="charTitle">👤 Postać</h3>
+<p data-key="charDesc">Artykuł biograficzny.</p>
+</div>
+<div class="template disabled" data-template="country">
+<h3 data-key="countryTitle">🌍 Państwo <span class="wip">WIP</span></h3>
+<p data-key="wipDesc">Szablon w przygotowaniu.</p>
+</div>
+<div class="template" data-template="war">
+<h3 data-key="warTitle">⚔️ Konflikt zbrojny <span class="wip">WIP</span></h3>
+<p data-key="warDesc">Wojna/bitwa.</p>
+</div>
+
+<div class="template disabled" data-template="org">
+<h3 data-key="orgTitle">🏛 Organizacja <span class="wip">WIP</span></h3>
+<p data-key="wipDesc">Szablon w przygotowaniu.</p>
+</div>
+
+</div>
+
+<h2 data-key="langTitle">Język</h2>
+
+<div class="languages">
+
+<div class="flag disabled"
+     data-lang="ENG">🇬🇧</div>
+<div class="flag selected"
+     data-lang="POL">🇵🇱</div>
+
+</div>
+
+<button id="createBtn" data-key="createBtn">Utwórz artykuł</button>
+
+
+<script>
+const translations = {
+    POL: {
+        title: "Wiki Editor",
+        subtitle: "Twórz artykuły w stylu Wikipedii",
+        templateTitle: "Szablon",
+
+        charTitle: "👤 Postać",
+        charDesc: "Artykuł biograficzny.",
+        warDesc: "Wojna/bitwa",
+        countryTitle: "🌍 Państwo",
+        warTitle: "⚔️ Konflikt zbrojny",
+        orgTitle: "🏛 Organizacja",
+        wipDesc: "Szablon w przygotowaniu.",
+
+        langTitle: "Język",
+        createBtn: "Utwórz artykuł"
+    },
+
+    ENG: {
+        title: "Wiki Editor",
+        subtitle: "Create Wikipedia-style articles",
+        templateTitle: "Template",
+
+        charTitle: "👤 Character",
+        charDesc: "Biography article.",
+
+        countryTitle: "🌍 Country",
+        warTitle: "⚔️ War",
+        warDesc: "War/battle",
+        orgTitle: "🏛 Organisation",
+        wipDesc: "Template in development.",
+
+        langTitle: "Language",
+        createBtn: "Create article"
+    }
+};
+let selectedTemplate="character";
+let selectedLanguage="POL";
+function setLanguage(lang) {
+    document.querySelectorAll("[data-key]").forEach(el => {
+        const key = el.dataset.key;
+
+        if (translations[lang] && translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+        }
+    });
+}
+document.querySelectorAll(".flag").forEach(flag => {
+
+    flag.onclick = () => {
+
+        document.querySelectorAll(".flag")
+            .forEach(f => f.classList.remove("selected"));
+
+        flag.classList.add("selected");
+
+        selectedLanguage = flag.dataset.lang;
+
+        setLanguage(selectedLanguage); // 🔥 DODANE
+    };
+
+});
+document.querySelectorAll(".template:not(.disabled)")
+.forEach(card=>{
+
+    card.onclick=()=>{
+
+        document.querySelectorAll(".template")
+        .forEach(c=>c.classList.remove("selected"));
+
+        card.classList.add("selected");
+
+        selectedTemplate=card.dataset.template;
+    };
+
+});
+
+document.getElementById("createBtn").onclick=()=>{
+
+    location.href=
+        `${selectedLanguage}/${selectedTemplate}/index.html`;
+
+};
+setLanguage(selectedLanguage);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta name="wiki-editor-version" content="1.0">
+</head>
+<body spellcheck="false">
+    <button id="addSectionBtn" class="side-btn">Dodaj kolejny nagłówek</button>
+    <button class="side-btn" onclick="exportHTML()">Export HTML</button>
+    <button class="side-btn" onclick="exportPNG()">Export PNG</button>
+    <button class="side-btn" id="previewBtn">Podgląd</button>
+    <button class="side-btn" onclick="saveProject()">💾 Zapisz</button>
+    <button class="side-btn" onclick="quickSave()">💾 Szybki Zapis</button>
+    <button class="side-btn" id="loadBtn" onclick="openExplorer()">📂 Wczytaj</button>
+    <button id="exitPreviewBtn" class="hidden">
+        ✖ Wyjdź z podglądu
+    </button>
+    <button class="side-btn" onclick="toggleBox('strony')">
+    Strony
+    </button>
+
+    <button class="side-btn" onclick="toggleBox('dowodcy')">
+        Dowódcy
+    </button>
+
+    <button class="side-btn" onclick="toggleBox('sily')">
+        Siły
+    </button>
+
+    <button class="side-btn" onclick="toggleBox('straty')">
+        Straty
+    </button>
+    <button class="side-btn" onclick="toggleRow('territory-row')">
+    Terytorium
+    </button>
+
+    <button class="side-btn" onclick="toggleRow('cause-row')">
+        Przyczyna
+    </button>
+
+    <button class="side-btn" onclick="toggleRow('result-row')">
+        Wynik
+    </button>
+    <button class="side-btn" onclick="toggleRow('conflict-row')">
+        Konflikt
+    </button>
+    <div id="toolbar" class="toolbar hidden">
+                <button onclick="format('bold')">B</button>
+                <button onclick="format('italic')">I</button>
+                <button onclick="formatBlock('P')">➖</button>
+                <button onclick="formatBlock('h1')">H1</button>
+                <button onclick="formatBlock('h2')">H2</button>
+                <button onclick="formatBlock('h3')"><strong>H3</strong></button>
+                <button onclick="openLinks()">🔗</button>
+                <button onclick="format('insertUnorderedList')">•</button>
+                <button onclick="insertSeeAlso()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Information_icon4.svg/20px-Information_icon4.svg.png"
+                        width="16" height="16">
+                </button>
+    </div>
+        <div id="explorer" class="explorer hidden">
+            <div class="explorer-header">
+                Projekty
+                <button onclick="closeExplorer()">✖</button>
+            </div>
+
+            <div id="explorerList"></div>
+    </div>
+    <div class="page">
+        <div class="layout">
+
+            <div class="page"></div>
+
+            <aside id="toc"><div class="toctitle">Spis treści</div>
+                <div class="pause"></div>
+                <ul id="tocList"></ul>
+            </aside>
+
+        </div>
+        <div class="article">
+            <h1 contenteditable="true">Bitwa pod Koronowem</h1>
+            <p contenteditable="true" class="tresc"><strong>Bitwa pod Koronowem</strong> – bitwa stoczona 10 października 1410, w czasie wielkiej wojny, między zaciężnymi siłami zakonu krzyżackiego, dowodzonymi przez Michała Küchmeistera von Sternberg, a wojskami polskimi, dowodzonymi przez Sędziwoja z Ostroroga i Piotra Niedźwiedzkiego, pod wsią Wilcze, zakończona zwycięstwem Polaków.</p>
+            <div class="section">
+                <button class="delete-btn">×</button>
+
+                <h2 contenteditable="true">Sytuacja przed bitwą</h2>
+                <p contenteditable="true">Po bitwie pod Grunwaldem i nieudanym oblężeniu Malborka siły krzyżackie rosły, siły polsko-litewskie zaś malały. W październiku 1410 siły krzyżackie liczyły już około 10 tysięcy zbrojnych.
+
+Wójt Nowej Marchii, Michał Küchmeister, z oddziałem liczącym około 3,5 – 4 tysięcy ludzi (w tym 3 tysiące zaciężnych z Czech i Śląska) po zdobyciu miasta Tucholi obległ tamtejszy zamek. Zostawił pod zamkiem część sił, a z resztą ruszył na południe, by z zaskoczenia opanować warowny klasztor cystersów w Koronowie, mający w krzyżackich zamierzeniach stać się podstawą do dalszych działań, których celem była Bydgoszcz.
+
+Władysław II Jagiełło wysłał przeciwko Krzyżakom liczące 2 tysiące zbrojnych oddziały pod dowództwem Sędziwoja z Ostroroga i Piotra Niedźwiedzkiego.
+
+Polacy zdążyli obsadzić Koronowo załogą, więc Krzyżacy, zaskoczeni polską gotowością do walki, przystąpili do odwrotu. W pościg ruszyli za nimi konni łucznicy. Widząc, że nie uda się uniknąć walki, wojska krzyżackie zatrzymały się na leżącym 7 kilometrów od Koronowa wzgórzu, znajdującym się między Buszkowem a Łąskiem.</p>
+            </div>
+        </div>
+        
+        <div class="infobox">
+            <table>
+                <tr><th colspan="2" contenteditable="true" class="infobox-title">Bitwa pod Koronowem</th></tr>
+                <tr><td colspan="2" class="infobox-subtitle conflict-row" contenteditable="true"><i>Wielka wojna z zakonem krzyżackim (1409-1411)</i></td></tr>
+                <tr><th colspan="2"><div class="thumbinfo"><img class="thumbinfo infobox-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Nowy_Dw%C3%B3r%2C_Koronowo%2C_Polska_-_panoramio_%2815%29.jpg/1920px-Nowy_Dw%C3%B3r%2C_Koronowo%2C_Polska_-_panoramio_%2815%29.jpg"></div><div class="captioninfo" contenteditable="true">Pomnik bitwy pod Koronowem w gminie Koronowo</div></th></tr>
+                <tr><td class="infoleft ifirst">Czas</td><td contenteditable="true" class="inforight ifirst">10 października 1410</td></tr>
+                <tr class="death-content"><td class="infoleft">Miejsce</td><td contenteditable="true" class="inforight">Wilcze</td></tr>
+                <tr class="territory-row"><td class="infoleft">Terytorium</td><td contenteditable="true" class="inforight">---</td></tr>
+                <tr class="cause-row"><td class="infoleft">Przyczyna</td><td contenteditable="true" class="inforight">---</td></tr>
+                <tr class="result-row"><td class="infoleft">Wynik</td><td contenteditable="true" class="inforight">zwycięstwo Polaków</td></tr>
+                <tbody class="strony">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Strony konfliktu
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Królestwo Polskie</td>
+                        <td colspan="1" contenteditable="true" class="warright">Państwo zakonu krzyżackiego</td>
+                    </tr>
+            </tbody>
+            <tbody class="dowodcy">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Dowódcy
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Sędziwój Ostroróg Piotr Niedźwiedzki</td>
+                        <td colspan="1" contenteditable="true" class="warright">Michael Küchmeister von Sternberg</td>
+                    </tr>
+            </tbody>
+            <tbody class="sily">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Siły
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">2 tysiące zbrojnych</td>
+                        <td colspan="1" contenteditable="true" class="warright">4 tysiące zbrojnych</td>
+                    </tr>
+            </tbody>
+            <tbody class="straty">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Straty
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Niewielkie</td>
+                        <td colspan="1" contenteditable="true" class="warright">około 1 tysiąca</td>
+                    </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="file" id="imgInput" accept="image/*" hidden>
+    <input type="file" class="importstrony" id="importHTML">
+</body>
