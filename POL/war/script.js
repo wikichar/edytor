@@ -183,39 +183,6 @@ document.addEventListener("click", e => {
     }
 
 });
-document.getElementById("addOffice").addEventListener("click", () => {
-    const table = document.querySelector(".infobox table");
-
-    const tbody = document.createElement("tbody");
-    tbody.className = "office-group";
-
-    tbody.innerHTML = `
-        <tr>
-            <td contenteditable="true" colspan="2" class="infobox-role">
-                Nowy urząd
-                <button class="remove-office">×</button>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="infoleft">Okres</td>
-            <td class="inforight" contenteditable="true">
-                od ...
-                <div class="inforight" contenteditable="true">do ...</div>
-            </td>
-        </tr>
-        <tr class="poprzednik">
-            <td class="infoleft">Poprzednik<button class="toggle-predecessor">x</button></td>
-            <td class="inforight" contenteditable="true">Wstaw osobę</td>
-        </tr>
-        <tr>
-            <td class="infoleft">Następca</td>
-            <td class="inforight" contenteditable="true">Wstaw osobę</td>
-        </tr>
-    `;
-
-    table.appendChild(tbody);
-});
 const imgInput = document.getElementById("imgInput");
 
 let activeImage = null;
