@@ -334,19 +334,6 @@ function exportPNG() {
         ui.forEach(el => el.classList.remove("export-mode"));
     });
 }
-document.getElementById("removeDeath").addEventListener("click", () => {
-
-    document.querySelectorAll(".death-content").forEach(el => {
-
-        if (el.classList.contains("hidden-death")) {
-            el.classList.remove("hidden-death");
-        } else {
-            el.classList.add("hidden-death");
-        }
-
-    });
-
-});
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-btn")) {
         e.target.closest(".section").remove();
@@ -885,3 +872,92 @@ function insertSeeAlso() {
 
     document.execCommand("insertHTML", false, html);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-features-btn");
+  const panel = document.getElementById("features-panel");
+  const container = document.getElementById("checkboxes-container");
+
+  // Dodajemy pole 'visible' (true = włączona, false = ukryta na starcie)
+  const cechy = [
+    { klasa: "cecha1", nazwa: "Pełne imię i nazwisko", visible: false },
+    { klasa: "cecha2", nazwa: "Imię i nazwisko urodzenia", visible: false },
+    { klasa: "cecha3", nazwa: "Imię i nazwisko", visible: false },
+    { klasa: "cecha4", nazwa: "Data urodzenia", visible: true },
+    { klasa: "cecha5", nazwa: "Miejsce urodzenia", visible: false },
+    { klasa: "cecha6", nazwa: "Data śmierci", visible: true },
+    { klasa: "cecha7", nazwa: "Miejsce śmierci", visible: false },
+    { klasa: "cecha8", nazwa: "Przyczyna śmierci", visible: false },
+    { klasa: "cecha9", nazwa: "Miejsce spoczynku", visible: false },
+    { klasa: "cecha10", nazwa: "Zawód", visible: false },
+    { klasa: "cecha11", nazwa: "Miejsce zamieszkania", visible: false },
+    { klasa: "cecha12", nazwa: "Narodowość", visible: false },
+    { klasa: "cecha13", nazwa: "Tytuł naukowy", visible: false },
+    { klasa: "cecha14", nazwa: "Edukacja", visible: false },
+    { klasa: "cecha15", nazwa: "Alma Mater", visible: false },
+    { klasa: "cecha16", nazwa: "Uczelnia", visible: false },
+    { klasa: "cecha17", nazwa: "Wydział", visible: false },
+    { klasa: "cecha18", nazwa: "Stanowisko", visible: false },
+    { klasa: "cecha19", nazwa: "Pracodawca", visible: false },
+    { klasa: "cecha20", nazwa: "Majątek", visible: false },
+    { klasa: "cecha21", nazwa: "Partia", visible: false },
+    { klasa: "cecha22", nazwa: "Wyznanie", visible: false },
+    { klasa: "cecha23", nazwa: "Rodzice", visible: false },
+    { klasa: "cecha24", nazwa: "Małżeństwo", visible: false },
+    { klasa: "cecha25", nazwa: "Partner", visible: false },
+    { klasa: "cecha26", nazwa: "Partnerka", visible: false },
+    { klasa: "cecha27", nazwa: "Dzieci", visible: false },
+    { klasa: "cecha28", nazwa: "Krewni i powinowaci", visible: false }
+  ];
+
+  // Obsługa przycisku menu (bez zmian)
+  toggleBtn.addEventListener("click", () => {
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+      toggleBtn.textContent = "Ukryj listę cech";
+    } else {
+      panel.style.display = "none";
+      toggleBtn.textContent = "Pokaż listę cech";
+    }
+  });
+
+  // Generowanie checkboxów
+  cechy.forEach(cecha => {
+    const row = document.createElement("div");
+    row.classList.add("checkbox-item");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `chk-${cecha.klasa}`;
+    
+    // USTAWIANIE STANU STARTOWEGO
+    checkbox.checked = cecha.visible; // Checkbox ptaszkowany tylko gdy visible jest true
+
+    const label = document.createElement("label");
+    label.htmlFor = `chk-${cecha.klasa}`;
+    label.style.marginLeft = "6px";
+    label.textContent = cecha.nazwa;
+
+    row.appendChild(checkbox);
+    row.appendChild(label);
+    container.appendChild(row);
+
+    // Szukamy odpowiadającego wiersza w tabeli
+    const targetRow = document.querySelector(`.${cecha.klasa}`);
+    
+    if (targetRow) {
+      // UKRYWANIE ELEMENTÓW W TABELI NA STARCIIE
+      if (!cecha.visible) {
+        targetRow.classList.add("hidden"); // Jeśli visible jest false, od razu chowamy wiersz
+      }
+
+      // Reakcja na kliknięcie
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          targetRow.classList.remove("hidden");
+        } else {
+          targetRow.classList.add("hidden");
+        }
+      });
+    }
+  });
+});
