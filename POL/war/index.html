@@ -1,579 +1,160 @@
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: white;
-    color: #202122;
-    line-height: 1.6;
-}
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta name="wiki-editor-version" content="1.0">
+</head>
+<body spellcheck="false">
+    <button id="addSectionBtn" class="side-btn">Dodaj kolejny nagłówek</button>
+    <button class="side-btn" onclick="exportHTML()">Export HTML</button>
+    <button class="side-btn" onclick="exportPNG()">Export PNG</button>
+    <button class="side-btn" id="previewBtn">Podgląd</button>
+    <button class="side-btn" onclick="saveProject()">💾 Zapisz</button>
+    <button class="side-btn" onclick="quickSave()">💾 Szybki Zapis</button>
+    <button class="side-btn" id="loadBtn" onclick="openExplorer()">📂 Wczytaj</button>
+    <button id="exitPreviewBtn" class="hidden">
+        ✖ Wyjdź z podglądu
+    </button>
+    <button class="side-btn" onclick="toggleBox('strony')">
+    Strony
+    </button>
 
-/* Layout */
-.page {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding-right: 0px;
-    display: flex;
-    gap: 0px;
-    align-items: flex-start;
-}
+    <button class="side-btn" onclick="toggleBox('dowodcy')">
+        Dowódcy
+    </button>
 
-/* Article */
-.article {
-    flex: 1;
-    width: 500px;
-    background: #fff;
-    padding: 40px 28px;
-    min-width: 0;
-}
+    <button class="side-btn" onclick="toggleBox('sily')">
+        Siły
+    </button>
 
-/* Title */
-.article h1 {
-    font-size: 28.8px;
-    font-family: "Linux Libertine", Georgia, Times;
-    font-weight: 500;
-    border-bottom: 1px solid #a2a9b1;
-    padding-bottom: 6px;
-    margin-top: 0;
-}
+    <button class="side-btn" onclick="toggleBox('straty')">
+        Straty
+    </button>
+    <button class="side-btn" onclick="toggleRow('territory-row')">
+    Terytorium
+    </button>
 
-/* Sections */
-.article h2 {
-    font-family: "Linux Libertine", Georgia, Times;
-    font-size: 24px;
-    font-weight: normal;
-    border-bottom: 1px solid #a2a9b1;
-    margin-top: 30px;
-    padding-bottom: 4px;
-}
+    <button class="side-btn" onclick="toggleRow('cause-row')">
+        Przyczyna
+    </button>
 
-/* Links */
-a {
-    color: #0645ad;
-    text-decoration: none;
-}
+    <button class="side-btn" onclick="toggleRow('result-row')">
+        Wynik
+    </button>
+    <button class="side-btn" onclick="toggleRow('conflict-row')">
+        Konflikt
+    </button>
+    <div id="toolbar" class="toolbar hidden">
+                <button onclick="format('bold')">B</button>
+                <button onclick="format('italic')">I</button>
+                <button onclick="formatBlock('P')">➖</button>
+                <button onclick="formatBlock('h1')">H1</button>
+                <button onclick="formatBlock('h2')">H2</button>
+                <button onclick="formatBlock('h3')"><strong>H3</strong></button>
+                <button onclick="openLinks()">🔗</button>
+                <button onclick="format('insertUnorderedList')">•</button>
+                <button onclick="insertSeeAlso()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Information_icon4.svg/20px-Information_icon4.svg.png"
+                        width="16" height="16">
+                </button>
+    </div>
+        <div id="explorer" class="explorer hidden">
+            <div class="explorer-header">
+                Projekty
+                <button onclick="closeExplorer()">✖</button>
+            </div>
 
-a:hover {
-    text-decoration: underline;
-}
+            <div id="explorerList"></div>
+    </div>
+    <div class="page">
+        <div class="layout">
 
-/* TOC */
-.toc {
-    background: #f8f9fa;
-    border: 1px solid #a2a9b1;
-    display: inline-block;
-    padding: 10px 14px;
-    font-size: 14px;
-}
+            <div class="page"></div>
 
-/* Infobox */
-.infobox {
-    width: 260px;
-    background: #fff;
-    border: 1px solid #a2a9b1;
-    margin-right: 30px;
-    margin-top: 105px;
-    font-size: 14px;
-    flex-shrink: 0;
-}
+            <aside id="toc"><div class="toctitle">Spis treści</div>
+                <div class="pause"></div>
+                <ul id="tocList"></ul>
+            </aside>
 
-.infobox table{
-    width:100%;
-    table-layout:fixed;
-    border-collapse:collapse;
-}
+        </div>
+        <div class="article">
+            <h1 contenteditable="true">Bitwa pod Koronowem</h1>
+            <p contenteditable="true" class="tresc"><strong>Bitwa pod Koronowem</strong> – bitwa stoczona 10 października 1410, w czasie wielkiej wojny, między zaciężnymi siłami zakonu krzyżackiego, dowodzonymi przez Michała Küchmeistera von Sternberg, a wojskami polskimi, dowodzonymi przez Sędziwoja z Ostroroga i Piotra Niedźwiedzkiego, pod wsią Wilcze, zakończona zwycięstwem Polaków.</p>
+            <div class="section">
+                <button class="delete-btn">×</button>
 
-/* TITLE INFBOXA (szary pasek) */
-.infobox-title {
-    background: #e6e6e6 !important;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 1px solid #a2a9b1;
-}
+                <h2 contenteditable="true">Sytuacja przed bitwą</h2>
+                <p contenteditable="true">Po bitwie pod Grunwaldem i nieudanym oblężeniu Malborka siły krzyżackie rosły, siły polsko-litewskie zaś malały. W październiku 1410 siły krzyżackie liczyły już około 10 tysięcy zbrojnych.
 
-/* komórki */
-.infobox td {
-    padding: 6px 8px;
-    background: #fff;
-}
+Wójt Nowej Marchii, Michał Küchmeister, z oddziałem liczącym około 3,5 – 4 tysięcy ludzi (w tym 3 tysiące zaciężnych z Czech i Śląska) po zdobyciu miasta Tucholi obległ tamtejszy zamek. Zostawił pod zamkiem część sił, a z resztą ruszył na południe, by z zaskoczenia opanować warowny klasztor cystersów w Koronowie, mający w krzyżackich zamierzeniach stać się podstawą do dalszych działań, których celem była Bydgoszcz.
 
-/* obrazek w infoboxie */
-.image-cell {
-    padding: 0;
-    text-align: center;
-    background: #fff;
-}
+Władysław II Jagiełło wysłał przeciwko Krzyżakom liczące 2 tysiące zbrojnych oddziały pod dowództwem Sędziwoja z Ostroroga i Piotra Niedźwiedzkiego.
 
-.infobox img {
-    width: 100%;
-    display: block;
-    cursor: pointer;
-}
+Polacy zdążyli obsadzić Koronowo załogą, więc Krzyżacy, zaskoczeni polską gotowością do walki, przystąpili do odwrotu. W pościg ruszyli za nimi konni łucznicy. Widząc, że nie uda się uniknąć walki, wojska krzyżackie zatrzymały się na leżącym 7 kilometrów od Koronowa wzgórzu, znajdującym się między Buszkowem a Łąskiem.</p>
+            </div>
+        </div>
+        
+        <div class="infobox">
+            <table>
+                <tr><th colspan="2" contenteditable="true" class="infobox-title">Bitwa pod Koronowem</th></tr>
+                <tr><td colspan="2" class="infobox-subtitle conflict-row" contenteditable="true"><i>Wielka wojna z zakonem krzyżackim (1409-1411)</i></td></tr>
+                <tr><th colspan="2"><div class="thumbinfo"><img class="thumbinfo infobox-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Nowy_Dw%C3%B3r%2C_Koronowo%2C_Polska_-_panoramio_%2815%29.jpg/1920px-Nowy_Dw%C3%B3r%2C_Koronowo%2C_Polska_-_panoramio_%2815%29.jpg"></div><div class="captioninfo" contenteditable="true">Pomnik bitwy pod Koronowem w gminie Koronowo</div></th></tr>
+                <tr><td class="infoleft ifirst">Czas</td><td contenteditable="true" class="inforight ifirst">10 października 1410</td></tr>
+                <tr class="death-content"><td class="infoleft">Miejsce</td><td contenteditable="true" class="inforight">Wilcze</td></tr>
+                <tr class="territory-row"><td class="infoleft">Terytorium</td><td contenteditable="true" class="inforight">---</td></tr>
+                <tr class="cause-row"><td class="infoleft">Przyczyna</td><td contenteditable="true" class="inforight">---</td></tr>
+                <tr class="result-row"><td class="infoleft">Wynik</td><td contenteditable="true" class="inforight">zwycięstwo Polaków</td></tr>
+                <tbody class="strony">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Strony konfliktu
+                        </td>
+                    </tr>
 
-/* podpis zdjęcia */
-.captioninfo {
-    font-family: sans-serif;
-    font-size: 12.92px;
-    color: #202122;
-    padding: 4px 6px;
-    font-weight: normal;
-}
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Królestwo Polskie</td>
+                        <td colspan="1" contenteditable="true" class="warright">Państwo zakonu krzyżackiego</td>
+                    </tr>
+            </tbody>
+            <tbody class="dowodcy">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Dowódcy
+                        </td>
+                    </tr>
 
-/* Responsive */
-@media (max-width: 900px) {
-    .page {
-        flex-direction: column;
-    }
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Sędziwój Ostroróg Piotr Niedźwiedzki</td>
+                        <td colspan="1" contenteditable="true" class="warright">Michael Küchmeister von Sternberg</td>
+                    </tr>
+            </tbody>
+            <tbody class="sily">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Siły
+                        </td>
+                    </tr>
 
-    .infobox {
-        width: 100%;
-    }
-}
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">2 tysiące zbrojnych</td>
+                        <td colspan="1" contenteditable="true" class="warright">4 tysiące zbrojnych</td>
+                    </tr>
+            </tbody>
+            <tbody class="straty">
+                    <tr>
+                        <td colspan="2" class="infobox-role">
+                            Straty
+                        </td>
+                    </tr>
 
-.infobox th.infobox-title {
-    background: #D3D3D3 !important;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 6px;
-    border-bottom: 1px solid #a2a9b1;
-}
-.infobox-title {
-    background: #D3D3D3 !important;
-    text-align: center;
-    font-size: 16.32px;
-    font-weight: bold;
-    padding: 6px;
-    line-height: 20px;
-    border-bottom: 1px solid #a2a9b1;
-}
-
-.infobox-subtitle {
-    background: #EEEEEE !important;
-    text-align: center;
-    font-size: 13.6px;
-    font-weight: normal;
-    border-bottom: 1px solid #a2a9b1;
-}
-.infoleft {
-    width: 66px;
-    vertical-align: top;
-    line-height: 1.5;
-    font-size: 13.6px;
-    background: #eaecf0 !important;
-}
-.inforight {
-    font-size: 13.6px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 1.25;
-}
-.ifirst {
-    border-top: 1px solid #a2a9b1;
-}
-.thumbinfo {
-    width: 250px;
-
-    background: #fff;
-    padding-left: 2px;
-    margin-top: 5px;
-    margin-bottom: 1px;
-}
-
-.thumbinfo img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.infobox-role {
-    background: #d3d3d3 !important;
-    text-align: center;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 6px;
-    border-top: 1px solid #a2a9b1;
-    border-bottom: 1px solid #a2a9b1;
-}
-.podpistd {
-    border-top: 1px solid #a2a9b1;
-    border-bottom: 1px solid #a2a9b1;
-}
-.tresc {
-    font-size: 16px;
-    font-family: sans-serif;
-    margin: 8px 0px 16px;
-}
-.toolbar {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #a2a9b1;
-    padding: 4px;
-    display: flex;
-    gap: 5px;
-    z-index: 9999;
-}
-
-.hidden {
-    visibility: hidden !important;
-}
-.side-btn {
-    padding: 10px 12px;
-    background: #eaecf0;
-    border: 1px solid #a2a9b1;
-    cursor: pointer;
-    font-size: 14px;
-}
-.section {
-    position: relative;
-    margin-bottom: 20px;
-    overflow: auto;
-    position: relative;
-}
-
-.delete-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-
-    width: 22px;
-    height: 22px;
-
-    border: 1px solid #a2a9b1;
-    background: #f8f9fa;
-    cursor: pointer;
-
-    font-size: 14px;
-    line-height: 18px;
-}
-
-.delete-btn:hover {
-    background: #e6e6e6;
-}
-.infobox-role {
-    position: relative;
-}
-
-
-.remove-office:hover {
-    background: #e6e6e6;
-}
-.thumb {
-    float: right;
-    width: 260px;
-    margin: 0 0 12px 16px;
-    background: #f8f9fa;
-    border: 1px solid #a2a9b1;
-    padding: 4px;
-}
-.thumb img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.caption {
-    font-size: 14.144px;
-    line-height: 1.2;
-    text-align: left;
-
-    padding-top: 3px;
-    color: #202122;
-}
-.editable-img {
-    cursor: pointer;
-}
-.add-img-btn {
-    display: block;
-    margin-top: 10px;
-
-    background: #eaecf0;
-    border: 1px solid #a2a9b1;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.add-img-btn:hover {
-    background: #dfe3e8;
-}
-.export-hide {
-    display: none !important;
-}
-.export-mode {
-    display: none !important;
-}
-.hidden-death {
-    display: none;
-}
-.hidden-predecessor{
-    display:none;
-}
-dialog{
-    border:none;
-    border-radius:8px;
-    padding:20px;
-    width:420px;
-}
-
-dialog::backdrop{
-    background:rgba(0,0,0,.45);
-}
-
-#projectList{
-    max-height:300px;
-    overflow:auto;
-}
-
-.project-item{
-
-    display:block;
-    width:100%;
-    margin:6px 0;
-    padding:8px;
-
-    text-align:left;
-    cursor:pointer;
-}
-.explorer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 700px;
-    height: 520px;
-
-    background: #f8f9fa !important;   /* solidne tło */
-    border: 1px solid #8a8a8a;
-    border-radius: 8px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    
-    overflow: hidden;
-    font-family: "Segoe UI", system-ui, sans-serif;
-    font-size: 14px;
-    z-index: 10000;           /* musi być wysoko */
-    display: none;
-}
-
-/* Pasek tytułu */
-.explorer-header {
-    background: #0078d7 !important;
-    color: white;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 600;
-    height: 38px;
-    border-bottom: 1px solid #106ebe;
-    user-select: none;
-}
-
-.explorer-header button {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 18px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.explorer-header button:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-/* Lista */
-#explorerList {
-    height: calc(100% - 38px);
-    overflow-y: auto;
-    background: white !important;   /* też solidne */
-    padding: 8px 0;
-}
-.file {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 6px 8px;
-    margin-bottom: 4px;
-
-    background: white;
-    border: 1px solid #ddd;
-    cursor: pointer;
-}
-
-.file:hover {
-    background: #e6f1ff;
-}
-
-.file-name {
-    flex: 1;
-}
-
-.file-delete {
-    color: red;
-    cursor: pointer;
-    margin-left: 10px;
-}
-.project-thumb {
-    width: 220px;
-    height: 140px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
-    position: relative;
-}
-
-.project-thumb .page {
-    transform: scale(0.25);
-    transform-origin: top left;
-    width: 800px; /* MUSI odpowiadać twojemu layoutowi */
-    pointer-events: none;
-}
-.project-thumb:hover {
-    transform: scale(1.5);
-    z-index: 999;
-}
-.internal-link {
-    color: #1a73e8;
-    text-decoration: underline;
-    cursor: pointer;
-}
-.preview-mode {
-    cursor: default;
-}
-
-.preview-mode .editable-img,
-.preview-mode a {
-    pointer-events: auto; /* linki działają */
-}
-
-.preview-mode * {
-    user-select: text;
-}
-#toc {
-    position: fixed;
-    top: 50px;
-    left: 100px;
-    width: 150px;
-    max-height: 80vh;
-    overflow-y: auto;
-    background: white;
-    z-index: 1000;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    overflow-y: auto;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-
-
-    background: white;
-}
-.toc-group, .toc-h2 , .toc-h3 {
-    margin: 0;
-}
-
-#toc li {
-    margin: 1px 0;
-}
-ul#tocList {
-    margin: 0;
-    padding-left:10px;
-    padding-right: 0px;
-}
-
-.toggle {
-    visibility: hidden;
-}
-.toc-h2 a {
-    display: block;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
-}
-.toc-h3 {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.toc-h3 a {
-    display: block;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
-}
-#toc .toc-h3 {
-    display: block;
-    padding-left: 30px;
-    margin: 2px 0;
-}
-.toc-group {
-    margin-top: 0px;
-    padding-top: 0px;
-}
-.toctitle {
-    font-weight: bold;
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #101418;
-    text-align: left;
-    margin-left: 5px;
-}
-.pause {
-    border-bottom: 1px solid #a2a9b1;
-    margin: 8px 0;
-}
-#importHTML {
-    font-family: sans-serif;
-    font-weight: 600;
-    color: #101418;
-    background-color: white;
-}
-.delete-btn, .add-img-btn, .remove-office, .toggle-predecessor, .side-btn {
-    visibility: hidden;
-}
-.see-also {
-    margin: 8px 0;
-    padding-left: 2em;
-
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-style: italic;
-}
-
-.see-also-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-}
-.warleft {
-    vertical-align: top;
-    text-align: top left;
-    background-color: #EEEEEE !important;
-    font-size: 13.6px;
-    border-right: lightgray solid 1px;
-    line-height: 1.5;
-}
-.warright {
-    vertical-align: top;
-    text-align: top left;
-    font-size: 13.6px;
-    background-color: #EEEEEE !important;
-    border-left: lightgray solid 1px;
-    line-height: 1.5;
-}
-.strony {
-    background-color: #D3D3D3 !important;
-}
-.hidden-section{
-    display:none;
-}
+                    <tr>
+                        <td colspan="1" contenteditable="true" class="warleft">Niewielkie</td>
+                        <td colspan="1" contenteditable="true" class="warright">około 1 tysiąca</td>
+                    </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="file" id="imgInput" accept="image/*" hidden>
+    <input type="file" class="importstrony" id="importHTML">
+</body>
