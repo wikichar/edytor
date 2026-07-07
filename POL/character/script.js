@@ -109,22 +109,55 @@ function createSection() {
     section.dataset.hasImage = "false";
 
     section.innerHTML = `
-        <button class="delete-btn">×</button>
-
+        <button class="delete-btn no-edit">×</button>
         <h2 contenteditable="true">
             Nowy nagłówek
         </h2>
-
         <p class="tresc" contenteditable="true">
             Nowa treść...
         </p>
-
-        <button class="add-img-btn">
+        <button class="add-img-btn no-edit" contenteditable="false">
             + zdjęcie
         </button>
     `;
     return section;
 }
+document.addEventListener("beforeinput", e => {
+    if (e.target.closest(".no-edit")) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("keydown", e => {
+    if (e.target.closest(".no-edit")) {
+        e.preventDefault();
+    }
+});
+document.addEventListener("beforeinput", e => {
+    if (e.target.closest(".no-edit")) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("keydown", e => {
+    if (e.target.closest(".no-edit")) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("dblclick", e => {
+    if (e.target.closest(".no-edit")) {
+        e.preventDefault();
+        window.getSelection().removeAllRanges();
+        document.activeElement.blur();
+    }
+});
+
+document.addEventListener("focusin", e => {
+    if (e.target.closest(".no-edit")) {
+        e.target.blur();
+    }
+});
 function createThumb(src){
 
     const thumb=document.createElement("div");
@@ -827,7 +860,9 @@ function enablePageEditing() {
     if (!page) return;
 
     page.querySelectorAll("*").forEach(el => {
-        el.setAttribute("contenteditable", "true");
+        if (!el.matches(".no-edit")) {
+            el.setAttribute("contenteditable", "true");
+        }
     });
 }
 function hideEditorUI() {
