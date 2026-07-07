@@ -1,0 +1,98 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta name="wiki-editor-version" content="1.0">
+</head>
+<body spellcheck="false">
+    <button id="addSectionBtn" class="side-btn">Dodaj kolejny nagłówek</button>
+    <button class="side-btn" onclick="exportHTML()">Export HTML</button>
+    <button class="side-btn" onclick="exportPNG()">Export PNG</button>
+    <button class="side-btn" id="previewBtn">Podgląd</button>
+    <button id="toggle-features-btn" class="side-btn">Pokaż listę cech</button>
+    <button class="side-btn" onclick="saveProject()">💾 Zapisz</button>
+    <button class="side-btn" onclick="quickSave()">💾 Szybki Zapis</button>
+    <button class="side-btn" id="loadBtn" onclick="openExplorer()">📂 Wczytaj</button>
+    <button id="exitPreviewBtn" class="hidden">
+        ✖ Wyjdź z podglądu
+    </button>
+    <div id="toolbar" class="toolbar hidden">
+                <button onclick="format('bold')">B</button>
+                <button onclick="format('italic')">I</button>
+                <button onclick="formatBlock('P')">➖</button>
+                <button onclick="formatBlock('h1')">H1</button>
+                <button onclick="formatBlock('h2')">H2</button>
+                <button onclick="formatBlock('h3')"><strong>H3</strong></button>
+                <button onclick="openLinks()">🔗</button>
+                <button onclick="format('insertUnorderedList')">•</button>
+                <button onclick="insertSeeAlso()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Information_icon4.svg/20px-Information_icon4.svg.png"
+                        width="16" height="16">
+                </button>
+    </div>
+        <div id="explorer" class="explorer hidden">
+            <div class="explorer-header">
+                Projekty
+                <button onclick="closeExplorer()">✖</button>
+            </div>
+
+            <div id="explorerList"></div>
+    </div>
+    <div id="features-panel" style="display: none;">
+        <h3>Wybierz widoczne cechy:</h3>
+        <!-- Checkboxy generowane automatycznie przez JavaScript -->
+        <div id="checkboxes-container"></div>
+    </div>
+    <div class="page">
+        <div class="layout">
+
+            <div class="page"></div>
+
+            <aside id="toc"><div class="toctitle">Spis treści</div>
+                <div class="pause"></div>
+                <ul id="tocList"></ul>
+            </aside>
+
+        </div>
+        <div class="article">
+            <h1 contenteditable="true">Saksońska Republika Rad</h1>
+            <p contenteditable="true" class="tresc"><strong>Saksońska Republika Rad</strong> (niem. Sachsen Räterepublik) – powołana w drodze rewolucji republika socjalistyczna na terenie Wolnego Państwa Saksonia, części Republiki Weimarskiej, istniejąca podczas rewolucji listopadowej 1918/1919. Proklamowana 13 listopada 1918 roku, a zlikwidowana w 1919 roku przez siły rządowe.</p>
+        </div>
+        
+        <div class="infobox">
+            <table>
+                <tr><th colspan="2" contenteditable="true" class="infobox-title">Saksońska Republika Rad<div class="infobox-subtitle" contenteditable="true">Sachsen Räterepublik</div></th></tr>
+                <tr class="cecha23"><td colspan="2" class="existdate" contenteditable="true">1918-1919</td></tr>
+                <tr><th colspan="2"><div class="thumbinfo"><img class="thumbinfo infobox-img" src="data:image/png;base64,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"></div><div class="captioninfo" contenteditable="true">Godło i Flaga</div></th></tr>
+                <tr class="cecha24"><td colspan="1" class="anthemn" contenteditable="false">Dewiza:<td class="anthemnr" contenteditable="true">Proletarier aller Länder, vereinigt euch!
+(Proletariusze wszystkich krajów, łączcie się!)</td></td></tr>
+                <tr class="cecha25"><td colspan="1" class="anthemn" contenteditable="false">Hymn:<td class="anthemnr" contenteditable="true">Międzynarodówka</td></td></tr>
+                <tr><th colspan="2"><div class="pause-info"></div></th></tr>
+                <tr class="cecha1"><td class="infoleft">Ustrój polityczny</td><td contenteditable="true" class="inforight">demokracja rad</td></tr>
+                <tr class="cecha2"><td class="infoleft">Konstytucja</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha3"><td class="infoleft">Stolica</td><td contenteditable="true" class="inforight">Drezno</td></tr>
+                <tr class="cecha4"><td class="infoleft">Data powstania</td><td contenteditable="true" class="inforight">13 listopada 1918</td></tr>
+                <tr class="cecha5"><td class="infoleft">Data likwidacji</td><td contenteditable="true" class="inforight">1919</td></tr>
+                <tr class="cecha6"><td class="infoleft">Władca</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha7"><td class="infoleft">Prezydent</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha8"><td class="infoleft">Premier</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha9"><td class="infoleft">Powierzchnia</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha10"><td class="infoleft">Populacja</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha11"><td class="infoleft">Waluta</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha12"><td class="infoleft">Telefoniczny nr kierunkowy</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha13"><td class="infoleft">Domena internetowa</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha14"><td class="infoleft">Kod samochodowy</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha15"><td class="infoleft">Kod samolotowy</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha16"><td class="infoleft">Strefa czasowa</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha17"><td class="infoleft">Narody i grupy etniczne</td><td contenteditable="true" class="inforight">Niemcy</td></tr>
+                <tr class="cecha18"><td class="infoleft">Język urzędowy</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha19"><td class="infoleft">Religia dominująca</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha20"><td class="infoleft">Terytoria zależne</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha21"><td class="infoleft">Terytoria autonomiczne</td><td contenteditable="true" class="inforight">-</td></tr>
+                <tr class="cecha22"><td class="infoleft">PKB</td><td contenteditable="true" class="inforight">-</td></tr>
+            </table>
+        </div>
+    </div>
+    <input type="file" id="imgInput" accept="image/*" hidden>
+    <input type="file" id="importHTML">
+</body>
