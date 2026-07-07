@@ -163,8 +163,9 @@ a:hover {
     margin-bottom: 10px;
     line-height: 1.25;
 }
-.ifirst {
-    border-top: 1px solid #a2a9b1;
+.pause-info {
+    border-bottom: 1px solid #a2a9b1;
+    margin: 0px 0;
 }
 .thumbinfo {
     width: 180px;
@@ -573,4 +574,52 @@ ul#tocList {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
+}
+.hidden-trait {
+    display: none;
+}
+/* Kontener na wszystkie checkboxy */
+#checkboxes-container {
+  display: flex;
+  flex-wrap: wrap; /* Pozwala na zawijanie elementów do nowej linii */
+  gap: 10px 20px;  /* Odstępy: 10px w pionie, 20px w poziomie między elementami */
+}
+
+/* Styl dla pojedynczego checkboxa z etykietą */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* Zapobiega łamaniu tekstu pojedynczej cechy */
+}
+
+/* Klasa ukrywająca wiersze w tabeli */
+.hidden {
+  display: none !important;
+}
+/* Panel z całą zawartością menu */
+#features-panel {
+  margin-left: 300px; /* Margines 200px od lewej krawędzi strony */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Kontener na wszystkie checkboxy (Flexbox bez zmian) */
+#checkboxes-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px 20px;  
+}
+
+/* Styl dla pojedynczego checkboxa z etykietą */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; 
+}
+
+/* Klasa ukrywająca wiersze w tabeli */
+.hidden {
+  display: none !important;
 }
